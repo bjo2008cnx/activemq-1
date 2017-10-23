@@ -2,38 +2,38 @@ package com.lwl.activemq.respone;
 
 import java.io.Serializable;
 
-public class ResultRespone implements Serializable{
+public class ResultRespone implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private boolean success = true;
-	
-	private Object data;
-	
-	private String msg;
+    private boolean success = true;
 
-	public boolean isSuccess() {
-		return success;
-	}
+    private Object data;
 
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
+    private String msg;
 
-	public Object getData() {
-		return data;
-	}
+    public boolean isSuccess() {
+        return success;
+    }
 
-	public void setData(Object data) {
-		this.data = data;
-	}
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 
-	public String getMsg() {
-		return msg;
-	}
+    public Object getData() {
+        return data;
+    }
 
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-	
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
 }
