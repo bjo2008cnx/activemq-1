@@ -11,15 +11,34 @@ import com.lwl.activemq.service.SpringBeanUtil;
  * @date 2017/10/23
  */
 public class PushMain {
+    static PushService newsPushService;
+
+    static {
+        SpringBeanUtil.initContextFile("applicationContext.xml");
+        newsPushService = SpringBeanUtil.getBean("newsPushService", PushService.class);
+    }
+
     public static void main(String[] args) {
-        run();
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                PushMain.run();
+            }
+        };
+        for (int i = 0; i < 10; i++) {
+            Thread t = new Thread(r);
+            t.start();
+        }
     }
 
     public static void run() {
-        SpringBeanUtil.initContextFile("applicationContext.xml");
-        PushService newsPushService = SpringBeanUtil.getBean("newsPushService", PushService.class);
-        News news = News.builder().author("zhangsuan").content("content.hs").url("http://www.aba.com").id(1).title("good book").build();
-        newsPushService.push(news);
-        System.out.println("pushed");
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 100_000; i++) {
+            News news = News.builder().author("zhangsuan" + i).content("content.hs" + i).url("http://www.aba.com" + i).id(i).title("good book" + i).build();
+            newsPushService.push(news);
+            System.out.println(Thread.currentThread() + ":" + i + ": pushed");
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println(endTime - startTime);
     }
 }

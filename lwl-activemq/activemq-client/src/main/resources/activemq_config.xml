@@ -11,7 +11,7 @@
      
     <!-- 内部统一使用的MQ地址 -->
     <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-        <property name="brokerURL" value="tcp://localhost:61616"/>
+        <property name="brokerURL" value="tcp://10.16.64.14:61617"/>
     </bean>
     <bean id="connectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">  
         <property name="connectionFactory" ref="targetConnectionFactory"/>  
