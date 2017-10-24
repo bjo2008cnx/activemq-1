@@ -9,6 +9,12 @@ import javax.jms.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class VirtualTopicExample {
+    protected static String VIRTUAL_TOPIC_NAME = "VirtualTopic.TEST";
+
+    //虚拟队列的名称以队列名结尾
+    protected static String VIRTUAL_TOPIC_CONSUMER_NAMEA = "Consumer.A.VirtualTopic.TEST";
+
+    protected static String VIRTUAL_TOPIC_CONSUMER_NAMEB = "Consumer.B.VirtualTopic.TEST";
 
     public static void main(String[] args) {
         try {
@@ -20,10 +26,10 @@ public class VirtualTopicExample {
             handleQueueA(session);
             handleQueueB(session);
 
-            MessageProducer producer = session.createProducer(new ActiveMQTopic(getVirtualTopicName()));
+            MessageProducer producer = session.createProducer(new ActiveMQTopic(VIRTUAL_TOPIC_NAME));
             int index = 0;
             while (index++ < 10) {
-                TextMessage message = session.createTextMessage(index + " message.");
+                TextMessage message = session.createTextMessage(index + "消息.");
                 producer.send(message);
             }
 
@@ -33,13 +39,13 @@ public class VirtualTopicExample {
     }
 
     private static void handleQueueB(Session session) throws JMSException {
-        Queue queueB = new ActiveMQQueue(getVirtualTopicConsumerNameB());
+        Queue queueB = new ActiveMQQueue(VIRTUAL_TOPIC_CONSUMER_NAMEB);
         MessageConsumer consumer3 = session.createConsumer(queueB);
-        final AtomicInteger aint2 = new AtomicInteger(0);
+        final AtomicInteger count = new AtomicInteger(0);
         MessageListener listenerB = new MessageListener() {
             public void onMessage(Message message) {
                 try {
-                    System.out.println("序号："+aint2.incrementAndGet() + " => 接收自" + getVirtualTopicConsumerNameB() + ": 消息体：" + message);
+                    System.out.println("B序号：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEB + ": 消息体：" + message);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -49,7 +55,7 @@ public class VirtualTopicExample {
     }
 
     private static void handleQueueA(Session session) throws JMSException {
-        Queue queueA = new ActiveMQQueue(getVirtualTopicConsumerNameA());
+        Queue queueA = new ActiveMQQueue(VIRTUAL_TOPIC_CONSUMER_NAMEA);
         MessageConsumer consumer1 = session.createConsumer(queueA);
         MessageConsumer consumer2 = session.createConsumer(queueA);
 
@@ -57,26 +63,23 @@ public class VirtualTopicExample {
         MessageListener listenerA = new MessageListener() {
             public void onMessage(Message message) {
                 try {
-                    System.out.println(count.incrementAndGet() + " => 接收自 " + getVirtualTopicConsumerNameA() + "消息体：" + message);
+                    System.out.println("A队列：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEA + "消息体：" + message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        MessageListener listenerA_EX = new MessageListener() {
+            public void onMessage(Message message) {
+                try {
+                    System.out.println("A____EX队列：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEA + "消息体：" + message);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         };
         consumer1.setMessageListener(listenerA);
-        consumer2.setMessageListener(listenerA);
-    }
-
-    protected static String getVirtualTopicName() {
-        return "VirtualTopic.TEST";
-    }
-
-    protected static String getVirtualTopicConsumerNameA() {
-        return "Consumer.A.VirtualTopic.TEST";
-    }
-
-    protected static String getVirtualTopicConsumerNameB() {
-        return "Consumer.B.VirtualTopic.TEST";
+        consumer2.setMessageListener(listenerA_EX);
     }
 
 }
