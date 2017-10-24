@@ -41,6 +41,7 @@ public class VirtualTopicExample {
 
     /**
      * 虚拟队列B只有1个consumer,它消费原始队列全部消息
+     *
      * @param session
      * @throws JMSException
      */
@@ -50,11 +51,8 @@ public class VirtualTopicExample {
         final AtomicInteger count = new AtomicInteger(0);
         MessageListener listenerB = new MessageListener() {
             public void onMessage(Message message) {
-                try {
-                    System.out.println("B序号：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEB + ": 消息体：" + message);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                System.out.println("B序号：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEB + ": 消息体：" + message);
+
             }
         };
         consumer3.setMessageListener(listenerB);
@@ -62,6 +60,7 @@ public class VirtualTopicExample {
 
     /**
      * 虚拟队列A有3个consumer,各消费原始队列1/3的消息.（实际情况：分别处理消息数为:4.3.3）
+     *
      * @param session
      * @throws JMSException
      */
@@ -74,29 +73,17 @@ public class VirtualTopicExample {
         final AtomicInteger count = new AtomicInteger(0);
         MessageListener listenerA = new MessageListener() {
             public void onMessage(Message message) {
-                try {
-                    System.out.println("A队列：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEA + "消息体：" + message);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                System.out.println("A队列：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEA + "消息体：" + message);
             }
         };
         MessageListener listenerA_EX = new MessageListener() {
             public void onMessage(Message message) {
-                try {
-                    System.out.println("A____EX队列：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEA + "消息体：" + message);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                System.out.println("A____EX队列：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEA + "消息体：" + message);
             }
         };
         MessageListener listenerA_EX2 = new MessageListener() {
             public void onMessage(Message message) {
-                try {
-                    System.out.println("A----EX队列：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEA + "消息体：" + message);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                System.out.println("A----EX队列：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEA + "消息体：" + message);
             }
         };
         consumer1.setMessageListener(listenerA);
