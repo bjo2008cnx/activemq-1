@@ -13,12 +13,12 @@ public class SimpleReceiver {
         Destination destination;
         MessageConsumer consumer;
         connectionFactory = new ActiveMQConnectionFactory("", "", SimpleConstant.URL);
+
         try {
             connection = connectionFactory.createConnection();
             connection.start();
             session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
-            //*******注意：此处需修改为topic才能支持1对多发信息
-            destination = session.createQueue("FirstQueue");
+            destination = session.createQueue("FirstQueue"); //此处需修改为topic才能支持1对多发信息
             consumer = session.createConsumer(destination,"receiver = 'A'");  //创建普通消费者【接收者】，使用属性过滤
 
             MessageListener ml = new MessageListener() {
