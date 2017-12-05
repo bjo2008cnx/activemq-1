@@ -1,4 +1,4 @@
-package com.lwl.activemq;
+package com.github.activemq;
 
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;

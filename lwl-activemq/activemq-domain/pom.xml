@@ -9,8 +9,8 @@
 
     <artifactId>activemq-domain</artifactId>
     <packaging>jar</packaging>
-    <version>${internal.version}</version>
     <name>activemq-domain</name>
+    <version>1.0.0</version>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>

@@ -1,4 +1,4 @@
-package com.lwl.activemq.service;
+package com.github.activemq.service;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;

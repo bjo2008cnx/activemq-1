@@ -1,9 +1,9 @@
-package com.lwl.activemq.service.impl;
+package com.github.activemq.service.impl;
 
 
 import com.alibaba.fastjson.JSON;
-import com.lwl.activemq.domain.News;
-import com.lwl.activemq.service.PushService;
+import com.github.activemq.domain.News;
+import com.github.activemq.service.PushService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;

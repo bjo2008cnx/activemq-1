@@ -1,17 +1,17 @@
-package com.lwl.activemq.controller;
+package com.github.activemq.controller;
 
 import javax.annotation.Resource;
 
+import com.github.activemq.domain.Client;
+import com.github.activemq.domain.News;
+import com.github.activemq.domain.User;
+import com.github.activemq.result.ResultRespone;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.lwl.activemq.domain.Client;
-import com.lwl.activemq.domain.News;
-import com.lwl.activemq.domain.User;
-import com.lwl.activemq.result.ResultRespone;
-import com.lwl.activemq.service.PushService;
+import com.github.activemq.service.PushService;
 
 @Controller
 @RequestMapping("/push")

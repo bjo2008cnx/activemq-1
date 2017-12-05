@@ -1,4 +1,4 @@
-package com.lwl.activemq.service;
+package com.github.activemq.service;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

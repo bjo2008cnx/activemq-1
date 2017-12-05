@@ -1,8 +1,8 @@
-package com.lwl.activemq;
+package com.github.activemq;
 
-import com.lwl.activemq.domain.News;
-import com.lwl.activemq.service.PushService;
-import com.lwl.activemq.service.SpringBeanUtil;
+import com.github.activemq.domain.News;
+import com.github.activemq.service.PushService;
+import com.github.activemq.service.SpringBeanUtil;
 
 /**
  * PushMain
