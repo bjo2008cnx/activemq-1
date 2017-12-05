@@ -1,6 +1,5 @@
-package com.lwl.activemq;
+package com.simple;
 
-import com.simple.SimpleConstant;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
@@ -25,7 +24,7 @@ public class VirtualTopicExample {
             Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             handleQueueA(session);
-            Thread.sleep(9000);
+            Thread.sleep(900);
             handleQueueB(session);
 
             MessageProducer producer = session.createProducer(new ActiveMQTopic(VIRTUAL_TOPIC_NAME));
@@ -47,16 +46,15 @@ public class VirtualTopicExample {
      * @throws JMSException
      */
     private static void handleQueueB(Session session) throws JMSException {
-        Queue queueB = new ActiveMQQueue(VIRTUAL_TOPIC_CONSUMER_NAMEB);
-        MessageConsumer consumer3 = session.createConsumer(queueB);
         final AtomicInteger count = new AtomicInteger(0);
-        MessageListener listenerB = new MessageListener() {
+        MessageListener listener = new MessageListener() {
             public void onMessage(Message message) {
+                if (true) throw new RuntimeException("exception occured");
                 System.out.println("B序号：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEB + ": 消息体：" + message);
-
             }
         };
-        consumer3.setMessageListener(listenerB);
+        Queue queue = new ActiveMQQueue(VIRTUAL_TOPIC_CONSUMER_NAMEB);
+        session.createConsumer(queue).setMessageListener(listener);
     }
 
     /**
@@ -66,30 +64,19 @@ public class VirtualTopicExample {
      * @throws JMSException
      */
     private static void handleQueueA(Session session) throws JMSException {
-        Queue queueA = new ActiveMQQueue(VIRTUAL_TOPIC_CONSUMER_NAMEA);
-        MessageConsumer consumer1 = session.createConsumer(queueA);
-        MessageConsumer consumer2 = session.createConsumer(queueA);
-        MessageConsumer consumer3 = session.createConsumer(queueA);
+        Queue queue = new ActiveMQQueue(VIRTUAL_TOPIC_CONSUMER_NAMEA);
 
         final AtomicInteger count = new AtomicInteger(0);
-        MessageListener listenerA = new MessageListener() {
-            public void onMessage(Message message) {
-                System.out.println("A队列：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEA + "消息体：" + message);
-            }
-        };
-        MessageListener listenerA_EX = new MessageListener() {
-            public void onMessage(Message message) {
-                System.out.println("A____EX队列：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEA + "消息体：" + message);
-            }
-        };
-        MessageListener listenerA_EX2 = new MessageListener() {
-            public void onMessage(Message message) {
-                System.out.println("A----EX队列：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEA + "消息体：" + message);
-            }
-        };
-        consumer1.setMessageListener(listenerA);
-        consumer2.setMessageListener(listenerA_EX);
-        consumer3.setMessageListener(listenerA_EX2);
+        session.createConsumer(queue).setMessageListener(createListener(count, "A1"));
+        session.createConsumer(queue).setMessageListener(createListener(count, "a2"));
+        session.createConsumer(queue).setMessageListener(createListener(count, "A3"));
     }
 
+    private static MessageListener createListener(final AtomicInteger count, final String name) {
+        return new MessageListener() {
+            public void onMessage(Message message) {
+                System.out.println(name + "队列：" + count.incrementAndGet() + " => 接收自 " + VIRTUAL_TOPIC_CONSUMER_NAMEA + "消息体：" + message);
+            }
+        };
+    }
 }
