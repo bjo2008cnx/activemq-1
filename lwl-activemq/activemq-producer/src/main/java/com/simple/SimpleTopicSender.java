@@ -4,10 +4,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
 
-public class SimpleSender {
-
-    public static final String URL = "tcp://localhost:61616";
-
+public class SimpleTopicSender {
     public static void main(String[] args) {
         ConnectionFactory connectionFactory;
         Connection connection = null;
@@ -19,10 +16,12 @@ public class SimpleSender {
             connection = connectionFactory.createConnection();
             connection.start();
             session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
-            destination = session.createQueue("FirstQueue"); //此处需修改为topic才能支持1对多发信息
+            destination = session.createTopic("FirstTopic");
             producer = session.createProducer(destination);   // 得到消息生成者【发送者】
 
+            //producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
             producer.setDeliveryMode(DeliveryMode.PERSISTENT);  //设置是否持久化
+
             sendMessage(session, producer, "product message");
             session.commit();
         } catch (Exception e) {
