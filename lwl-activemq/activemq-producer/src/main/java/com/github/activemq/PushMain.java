@@ -33,7 +33,7 @@ public class PushMain {
 
     public static void run() {
         long startTime = System.currentTimeMillis();
-        for (int i = 0; i < 100_000; i++) {
+        for (int i = 0; i < 1_0; i++) {
             News news = News.builder().author("zhangsuan" + i).content("content.hs" + i).url("http://www.aba.com" + i).id(i).title("good book" + i).build();
             newsPushService.push(news);
             System.out.println(Thread.currentThread() + ":" + i + ": pushed");

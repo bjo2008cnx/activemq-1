@@ -64,8 +64,8 @@
 		<level value="INFO" />
 		<appender-ref ref="Remote_Call_Appender" />
 	</logger>
-	<logger name="com.lwl" additivity="false">
-		<level value="INFO" />
+	<logger name="com.github" additivity="false">
+		<level value="debug" />
 		<appender-ref ref="FILE_Appender" />
 	</logger>
 	<logger name="java.sql.Connection" additivity="true">

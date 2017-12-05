@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/index")
 public class IndexController {
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public ResultRespone index() {
         ResultRespone respone = new ResultRespone();
