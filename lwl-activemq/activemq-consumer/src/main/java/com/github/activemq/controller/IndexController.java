@@ -1,6 +1,6 @@
-package com.lwl.activemq.controller;
+package com.github.activemq.controller;
 
-import com.lwl.activemq.respone.ResultRespone;
+import com.github.activemq.respone.ResultRespone;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

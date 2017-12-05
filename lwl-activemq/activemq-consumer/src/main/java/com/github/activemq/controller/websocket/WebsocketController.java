@@ -1,4 +1,4 @@
-package com.lwl.activemq.controller.websocket;
+package com.github.activemq.controller.websocket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

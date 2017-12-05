@@ -1,8 +1,8 @@
-package com.lwl.activemq.listener;
+package com.github.activemq.listener;
 
 import com.alibaba.fastjson.JSON;
-import com.lwl.activemq.controller.websocket.WebsocketController;
-import com.lwl.activemq.domain.Client;
+import com.github.activemq.controller.websocket.WebsocketController;
+import com.github.activemq.domain.Client;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 

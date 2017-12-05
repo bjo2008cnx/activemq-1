@@ -1,4 +1,4 @@
-package com.lwl.activemq.respone;
+package com.github.activemq.respone;
 
 import java.io.Serializable;
 
