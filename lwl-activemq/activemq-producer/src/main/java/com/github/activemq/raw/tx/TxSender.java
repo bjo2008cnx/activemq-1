@@ -1,27 +1,30 @@
-package com.simple;
+package com.github.activemq.raw.tx;
 
+import com.github.activemq.raw.MQConstant;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
 
-public class SimpleTopicSender {
+public class TxSender {
+
+    public static final String URL = "tcp://localhost:61616";
+    public static final String QUEUE_NAME = "TxQueue";
+
     public static void main(String[] args) {
         ConnectionFactory connectionFactory;
         Connection connection = null;
         Session session;
         Destination destination;
         MessageProducer producer;
-        connectionFactory = new ActiveMQConnectionFactory("", "", SimpleConstant.URL);
+        connectionFactory = new ActiveMQConnectionFactory("", "", MQConstant.URL);
         try {
             connection = connectionFactory.createConnection();
             connection.start();
-            session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
-            destination = session.createTopic("FirstTopic");
+            session = connection.createSession(Boolean.TRUE, Session.SESSION_TRANSACTED);
+            destination = session.createQueue(QUEUE_NAME); //此处需修改为topic才能支持1对多发信息
             producer = session.createProducer(destination);   // 得到消息生成者【发送者】
 
-            //producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
             producer.setDeliveryMode(DeliveryMode.PERSISTENT);  //设置是否持久化
-
             sendMessage(session, producer, "product message");
             session.commit();
         } catch (Exception e) {

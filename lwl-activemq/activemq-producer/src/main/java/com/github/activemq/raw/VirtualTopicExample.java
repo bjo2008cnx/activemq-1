@@ -1,4 +1,4 @@
-package com.simple;
+package com.github.activemq.raw;
 
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -18,7 +18,7 @@ public class VirtualTopicExample {
 
     public static void main(String[] args) {
         try {
-            ActiveMQConnectionFactory factoryA = new ActiveMQConnectionFactory(SimpleConstant.URL);
+            ActiveMQConnectionFactory factoryA = new ActiveMQConnectionFactory(MQConstant.URL);
             ActiveMQConnection conn = (ActiveMQConnection) factoryA.createConnection();
             conn.start();
             Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
