@@ -7,6 +7,7 @@ import javax.jms.*;
 public class SimpleTopicReceiver {
 
     public static final String URL = "tcp://localhost:61616";
+    public static final String CLIENT_ID = "guangdong";
 
     public static void main(String[] args) {
         ConnectionFactory connectionFactory;
@@ -18,12 +19,12 @@ public class SimpleTopicReceiver {
         connectionFactory = new ActiveMQConnectionFactory("", "", SimpleConstant.URL);
         try {
             connection = connectionFactory.createConnection();
-            connection.setClientID("guangdong"); //持久化订阅才使用下语句！参数是clientid，设置该参数后MQ会记住该ID---
+            connection.setClientID(CLIENT_ID); //持久化订阅才使用下语句！参数是clientid，设置该参数后MQ会记住该ID---
             connection.start();
             session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
             destination = session.createTopic("FirstTopic");
             //持久化订阅！第二个参数是client名
-            consumer = session.createDurableSubscriber((Topic) destination, "guangdong");
+            consumer = session.createDurableSubscriber((Topic) destination, CLIENT_ID);
 
             MessageListener ml = new MessageListener() {
                 @Override
