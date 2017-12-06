@@ -1,5 +1,6 @@
-package com.github.activemq.raw;
+package com.github.activemq.raw.adv;
 
+import com.github.activemq.raw.MQConstant;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;

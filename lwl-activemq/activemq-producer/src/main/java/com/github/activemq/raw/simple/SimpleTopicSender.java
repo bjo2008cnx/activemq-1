@@ -1,11 +1,11 @@
-package com.github.activemq.raw;
+package com.github.activemq.raw.simple;
 
+import com.github.activemq.raw.MQConstant;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
 
-public class SimpleSender {
-
+public class SimpleTopicSender {
     public static void main(String[] args) {
         ConnectionFactory connectionFactory;
         Connection connection = null;
@@ -16,11 +16,13 @@ public class SimpleSender {
         try {
             connection = connectionFactory.createConnection();
             connection.start();
-            session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
-            destination = session.createQueue("FirstQueue"); //此处需修改为topic才能支持1对多发信息
+            session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
+            destination = session.createTopic("FirstTopic");
             producer = session.createProducer(destination);   // 得到消息生成者【发送者】
 
+            //producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
             producer.setDeliveryMode(DeliveryMode.PERSISTENT);  //设置是否持久化
+
             sendMessage(session, producer, "product message");
             session.commit();
         } catch (Exception e) {
