@@ -21,12 +21,8 @@ public class SimpleTopicReceiver {
             connection.setClientID("guangdong"); //持久化订阅才使用下语句！参数是clientid，设置该参数后MQ会记住该ID---
             connection.start();
             session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
-            //*******注意：此处需修改为topic才能支持1对多发信息
-            destination = session.createQueue("FirstQueue");
-            //destination = session.createTopic("FirstTopic");
-            //创建普通消费者【接收者】，使用属性过滤
-            //consumer = session.createConsumer(destination,"receiver = 'A'");
-            //--------持久化订阅！！！！------第二个参数是client名
+            destination = session.createTopic("FirstTopic");
+            //持久化订阅！第二个参数是client名
             consumer = session.createDurableSubscriber((Topic) destination, "guangdong");
 
             MessageListener ml = new MessageListener() {
@@ -43,6 +39,7 @@ public class SimpleTopicReceiver {
             };
             consumer.setMessageListener(ml);
             while (true) {
+                //do nothing.
             }
         } catch (Exception e) {
             e.printStackTrace();
